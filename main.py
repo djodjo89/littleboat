@@ -111,3 +111,5 @@ P2x = askParameter("abscisse")
 P2y = askParameter("Ordonné")
 matPointControl = np.array([[0,P2x,0],[0,P2y,6]])
 visu_BezierQuad(matPointControl, 'b') 
+
+plt.show()
