@@ -93,13 +93,13 @@ def visu_BezierQuad(matPointControl,str):
     visu_point(matPoint,str)
     
 # For testing purposes only
-def askXParameter():
+def askParameter(param):
     try:
-        x = int(input("Saisissez l'abscisse du point de contrôle: "))
-        return x
+        paramSail = int(input("Saisissez "+param+" du point de contrôle: "))
+        return paramSail
     except ValueError:
         print("Veuillez saisir un entier")
-        return askXParameter()
+        return askParameter()
 
 
 """
@@ -107,10 +107,9 @@ Creation of the sail
 """
 #Sail without rotation or wind 
 #P1 = (0,0), P2 = (0, 3), P3 = (0, 6)
-P2x = askXParameter()
-P2y = 3
+P2x = askParameter("abscisse")
+P2y = askParameter("Ordonné")
 matPointControl = np.array([[0,P2x,0],[0,P2y,6]])
 visu_BezierQuad(matPointControl, 'b') 
 
 plt.show()
-
