@@ -112,4 +112,5 @@ P2y = 3
 matPointControl = np.array([[0,P2x,0],[0,P2y,6]])
 visu_BezierQuad(matPointControl, 'b') 
 
+plt.show()
 
