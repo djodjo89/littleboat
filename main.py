@@ -7,6 +7,8 @@ Created on Fri Nov 29 23:18:19 2019
 
 import numpy as np
 import matplotlib.pyplot as plt
+import random as rand
+
 
 """
 Creation of drawing environment
@@ -101,15 +103,40 @@ def askParameter(param):
         print("Veuillez saisir un entier")
         return askParameter()
 
+def rescale():
+    plt.axis('scaled')
+    size = 20
+    plt.xlim(-size - 1, size + 1)
+    plt.ylim(-size - 1, size + 1)
 
 """
 Creation of the sail
 """
+
+""" Last Method used to create the sail
 #Sail without rotation or wind 
 #P1 = (0,0), P2 = (0, 3), P3 = (0, 6)
 P2x = askParameter("abscisse")
 P2y = askParameter("Ordonné")
 matPointControl = np.array([[0,P2x,0],[0,P2y,6]])
-visu_BezierQuad(matPointControl, 'b') 
+visu_BezierQuad(matPointControl, 'b')
 
 plt.show()
+"""
+
+
+"""
+Method with an infinite loop, create plots with random mouvement arround one point
+"""
+#Creation of the constant point
+P2x = askParameter("abscisse")
+P2y = askParameter("Ordonné")
+
+while True :
+    P2Xrand = rand.randint(P2x-1, P2x+1)
+    P2Yrand = rand.randint(P2y - 1, P2y + 1)
+
+    matPointControl = np.array([[0, P2Xrand, 0], [0, P2Yrand, 6]])
+    visu_BezierQuad(matPointControl, 'b')
+    rescale()
+    plt.show()
