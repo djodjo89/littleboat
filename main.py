@@ -8,7 +8,6 @@ Created on Fri Nov 29 23:18:19 2019
 from root import Root
 from bezier import Bezier
 import matplotlib.animation as animation
-import matplotlib.pyplot as plt
 
 
 # For testing purposes only
