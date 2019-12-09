@@ -16,7 +16,8 @@ class Root(Tk):
         self.canvas = FigureCanvasTkAgg(self.figure, self)
         self.ax = self.figure.add_subplot(111)
         self.ax.axis([-50, 50, -20, 20])
-        self.line, = self.ax.plot(self.bezier.control_point_matrix[0], self.bezier.control_point_matrix[1], 'k')
+        self.ax.set_facecolor('#3399ff')
+        self.line, = self.ax.plot(self.bezier.control_point_matrix[0], self.bezier.control_point_matrix[1], '#ffffff')
         self.canvas.get_tk_widget().grid(column=0, row=1)
         self.wind = Wind()
         self.wind.x_counter = self.bezier.base_control_point_x
