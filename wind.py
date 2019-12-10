@@ -5,37 +5,39 @@ from numpy.random import rand
 
 
 class Wind:
-    def __init__(self):
-        self.x_counter = 0
-        self.y_counter = 0
+    def __init__(self, box):
+        self.box = box
+        self.x_counter = box.x_min
+        self.y_counter = box.y_min
         self.state = 'increasing'
+        self.x_strength = 1
+        self.y_strength = 1
 
     def increase(self):
-        self.x_counter += 1
-        self.y_counter += 0
+        self.x_counter = self.box.update_x(self.x_counter, self.x_counter + self.x_strength)
+        self.y_counter = self.box.update_y(self.y_counter, self.y_counter + 0)
 
     def decrease(self):
-        self.x_counter -= 1
-        self.y_counter -= 0
+        self.x_counter = self.box.update_x(self.x_counter, self.x_counter - self.x_strength)
+        self.y_counter = self.box.update_y(self.y_counter, self.y_counter - 0)
 
     def increase_and_decrease(self):
-        if 'increasing' == self.state:
-            if 30 > self.x_counter:
-                self.increase()
-            elif 30 == self.x_counter:
+        if self.box.in_x_interval(self.x_counter):
+            if self.box.x_max == self.x_counter:
                 self.state = 'decreasing'
-        else:
-            if 1 < self.x_counter:
-                self.decrease()
-            elif 1 == self.x_counter:
+            elif self.box.x_min == self.x_counter:
                 self.state = 'increasing'
+        self.evolve()
+
+    def evolve(self):
+        if self.state == 'increasing':
+            self.increase()
+        else:
+            self.decrease()
 
     def rising_storm(self):
         U = rand(1, 1)
-        print(U)
-        if U < 0.6:
-            print('inc')
+        if U < 0.7:
             self.increase()
         else:
-            print('dec')
             self.decrease()
