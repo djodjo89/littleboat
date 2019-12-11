@@ -21,7 +21,7 @@ class Bezier:
         return rand.randint(self.base_control_point_y - 1, self.base_control_point_y + 1)
 
     def compute_bezier_curve(self):
-        self.control_point_matrix = np.array([[0, self.randomize_point_x(), 0], [0, self.randomize_point_y(), 6]])
+        self.control_point_matrix = np.array([[0, self.randomize_point_x(), 0], [-500, self.randomize_point_y(), 500]])
         """ Number of points to display """
         n = 50
         mt = np.linspace(0, 1., n)
