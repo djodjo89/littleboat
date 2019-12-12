@@ -10,13 +10,13 @@ class Wind:
         self.y_counter = 0
         self.state = 'increasing'
 
-    def increase(self):
-        self.x_counter += 1
-        self.y_counter += 0
+    def increase(self, x, y):
+        self.x_counter += x
+        self.y_counter += y
 
-    def decrease(self):
-        self.x_counter -= 1
-        self.y_counter -= 0
+    def decrease(self, x, y):
+        self.x_counter -= x
+        self.y_counter -= y
 
     def increase_and_decrease(self):
         if 'increasing' == self.state:
@@ -31,11 +31,24 @@ class Wind:
                 self.state = 'increasing'
 
     def rising_storm(self):
-        U = rand(1, 1)
-        print(U)
-        if U < 0.6:
+        u = rand(1, 1)
+        print(u)
+        if u < 0.6:
             print('inc')
-            self.increase()
+            self.increase(1, 0)
         else:
             print('dec')
-            self.decrease()
+            self.decrease(1, 0)
+
+    def calm_water(self):
+        u = rand(1, 1)
+        print(u)
+        if u < 0.7:
+            print('dec')
+            self.decrease(0, 1)
+            u = rand(1, 1)
+            if u < 0.5:
+                self.increase(0, 1)
+        else:
+            print('inc')
+            self.increase(0, 1)

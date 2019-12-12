@@ -14,6 +14,7 @@ class Root(Tk):
         self.bezier = bezier
         self.figure = Figure()
         self.canvas = FigureCanvasTkAgg(self.figure, self)
+
         self.ax = self.figure.add_subplot(111)
         self.ax.axis([-50, 50, -20, 20])
         self.line, = self.ax.plot(self.bezier.control_point_matrix[0], self.bezier.control_point_matrix[1], 'k')
@@ -23,7 +24,8 @@ class Root(Tk):
         self.wind.y_counter = self.bezier.base_control_point_y
 
     def animate(self, i):
-        self.wind.rising_storm()
+        #self.wind.rising_storm()
+        self.wind.calm_water()
         self.bezier.base_control_point_x = self.wind.x_counter
         self.bezier.base_control_point_y = self.wind.y_counter
         self.bezier.display_bezier()
