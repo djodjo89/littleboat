@@ -27,7 +27,7 @@ class Root(Tk):
 
         """DIMENSIONS INITIALIZATION"""
         self.input = InputReader()
-        self.box = Box(0, 1000, 0, 200)
+        self.box = Box(0, 1000, -600, 200)
         self.wind = Wind(self.box)
 
         """MATHEMATICAL OBJECTS INITIALIZATION"""
@@ -39,7 +39,8 @@ class Root(Tk):
 
     def animate(self, i):
         """UPDATE WIND"""
-        self.wind.rising_storm()
+        #self.wind.rising_storm()
+        self.wind.calm_water()
         """UPDATE CONTROL POINT POSITION"""
         self.bezier.set_control_point(
             self.box.update_x(self.bezier.base_control_point_x, self.wind.x_counter),
