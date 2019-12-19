@@ -22,13 +22,15 @@ class Root(Tk):
         self.canvas.get_tk_widget().grid(column=0, row=1)
         """END OF NOT SO IMPORTANT ZONE"""
 
-        """GRAPH DISPLAY SETTINGS"""
+        """GRAPH DISgitPLAY SETTINGS"""
         self.mast = self.figure.add_subplot(111)
         self.deck = self.figure.add_subplot(111)
-        self.mast.add_patch(Rectangle((-10, -800), 20, 1303, linewidth=1, edgecolor='brown', facecolor='m', zorder=2))
-        self.deck.add_patch(Rectangle((-1510, -800), 3000, 10, linewidth=1, edgecolor='brown', facecolor='m'))
+        self.mast.add_patch(Rectangle((-10, -800), 30, 1303, linewidth=1, edgecolor='#95634a', facecolor='#95634a', zorder=2))
+        self.deck.add_patch(Rectangle((-1510, -800), 3000, 10, linewidth=1, edgecolor='#95634a', facecolor='#95634a'))
         self.sail = self.figure.add_subplot(111)
         self.hull = self.figure.add_subplot(111)
+        self.sea = self.figure.add_subplot(111)
+        self.sea.add_patch(Rectangle((-2150, -900), 4500, -1060, linewidth=1, edgecolor='blue', facecolor='blue', zorder=3, alpha=0.5))
         self.graph = Graph(self.sail)
 
         """DIMENSIONS INITIALIZATION"""
@@ -56,7 +58,8 @@ class Root(Tk):
         self.hull.plot(
             self.hull_bezier.control_point_matrix[0],
             self.hull_bezier.control_point_matrix[1],
-            'brown', linewidth=2)
+            '#95634a', linewidth=2)
+        self.hull.fill_between(self.hull_bezier.control_point_matrix[0], -800, self.hull_bezier.control_point_matrix[1], facecolor='#95634a')
 
         self.line, = self.graph.ax.plot(
             self.sail_bezier.control_point_matrix[0],
