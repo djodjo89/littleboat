@@ -30,8 +30,8 @@ class Root(Tk):
         self.input = InputReader()
         self.box = Box(200, 1000, -600, 200)
         self.wind = Wind(self.box)
-        self.windType = 1;
-        self.windTime = 0;
+        self.windType = 1
+        self.windTime = 0
 
         """MATHEMATICAL OBJECTS INITIALIZATION"""
         self.bezier = Bezier(min(self.box.get_x_range()), min(self.box.get_y_range()))
