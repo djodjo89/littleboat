@@ -20,25 +20,51 @@ class Root(Tk):
         self.figure = Figure()
         self.canvas = FigureCanvasTkAgg(self.figure, self)
         self.canvas.get_tk_widget().grid(column=0, row=1)
-        self.mast = Rectangle((50, 100), 10, 500, linewidth=1, edgecolor='m', facecolor='m')
         """END OF NOT SO IMPORTANT ZONE"""
 
-        """GRAPH DISPLAY SETTINGS"""
-        self.graph = Graph(self.figure.add_subplot(111))
+        """GRAPH DISgitPLAY SETTINGS"""
+        self.mast = self.figure.add_subplot(111)
+        self.deck = self.figure.add_subplot(111)
+        self.mast.add_patch(Rectangle((-10, -800), 30, 1303, linewidth=1, edgecolor='#95634a', facecolor='#95634a', zorder=2))
+        self.deck.add_patch(Rectangle((-1510, -800), 3000, 10, linewidth=1, edgecolor='#95634a', facecolor='#95634a'))
+        self.sail = self.figure.add_subplot(111)
+        self.hull = self.figure.add_subplot(111)
+        self.sea = self.figure.add_subplot(111)
+        self.sea.add_patch(Rectangle((-2150, -900), 4500, -1060, linewidth=1, edgecolor='blue', facecolor='blue', zorder=3, alpha=0.5))
+        self.graph = Graph(self.sail)
 
         """DIMENSIONS INITIALIZATION"""
         self.input = InputReader()
         self.box = Box(200, 1000, -600, 200)
         self.wind = Wind(self.box)
-        self.windType = 1;
-        self.windTime = 0;
+        self.windType = 1
+        self.windTime = 0
 
         """MATHEMATICAL OBJECTS INITIALIZATION"""
-        self.bezier = Bezier(min(self.box.get_x_range()), min(self.box.get_y_range()))
+        self.sail_bezier = Bezier(
+            min(self.box.get_x_range()),
+            min(self.box.get_y_range()),
+            0, -500,
+            0, 500,
+            True
+        )
+
+        self.hull_bezier = Bezier(
+            -700, -1600,
+            -1500, -800,
+            1490, -800
+        )
+        self.hull_bezier.compute_bezier_curve()
+        self.hull.plot(
+            self.hull_bezier.control_point_matrix[0],
+            self.hull_bezier.control_point_matrix[1],
+            '#95634a', linewidth=2)
+        self.hull.fill_between(self.hull_bezier.control_point_matrix[0], -800, self.hull_bezier.control_point_matrix[1], facecolor='#95634a')
+
         self.line, = self.graph.ax.plot(
-            self.bezier.control_point_matrix[0],
-            self.bezier.control_point_matrix[1],
-            '#ffffff')
+            self.sail_bezier.control_point_matrix[0],
+            self.sail_bezier.control_point_matrix[1],
+            '#ffffff', zorder=1)
 
     def animate(self, i):
         """UPDATE WIND"""
@@ -56,13 +82,13 @@ class Root(Tk):
         self.update_wind(self.windType)
 
         """UPDATE CONTROL POINT POSITION"""
-        self.bezier.set_control_point(
-            self.box.update_x(self.bezier.base_control_point_x, self.wind.x_counter),
-            self.box.update_y(self.bezier.base_control_point_y, self.wind.y_counter))
-        self.bezier.compute_bezier_curve()
+        self.sail_bezier.set_control_point(
+            self.box.update_x(self.sail_bezier.base_control_point_x, self.wind.x_counter),
+            self.box.update_y(self.sail_bezier.base_control_point_y, self.wind.y_counter))
+        self.sail_bezier.compute_bezier_curve()
         """UPDATE GRAPH COORDINATES"""
-        self.line.set_xdata(self.bezier.control_point_matrix[0])
-        self.line.set_ydata(self.bezier.control_point_matrix[1])
+        self.line.set_xdata(self.sail_bezier.control_point_matrix[0])
+        self.line.set_ydata(self.sail_bezier.control_point_matrix[1])
         return self.line,
 
     def update_wind(self, wind_type):
